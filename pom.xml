@@ -7,11 +7,7 @@
     <groupId>tokyo.peya.plugins</groupId>
     <artifactId>GameManager</artifactId>
     <version>1.0.0</version>
-    <modules>
-        <module>plugin</module>
-        <module>GameManagerAPI</module>
-    </modules>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <name>GameManager</name>
 
@@ -78,6 +74,10 @@
             <id>dmulloy2-repo</id>
             <url>https://repo.dmulloy2.net/repository/public/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -92,6 +92,30 @@
             <artifactId>annotations</artifactId>
             <version>23.0.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib</artifactId>
+            <version>4.5.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>tokyo.peya.lib</groupId>
+            <artifactId>PeyangSuperLibrary</artifactId>
+            <version>114.191.981.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.TeamKUN</groupId>
+            <artifactId>PeyangPaperUtils</artifactId>
+            <version>1.0.9</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

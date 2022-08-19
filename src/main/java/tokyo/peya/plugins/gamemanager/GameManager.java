@@ -1,18 +1,23 @@
 package tokyo.peya.plugins.gamemanager;
 
+import net.kunmc.lab.peyangpaperutils.lib.command.CommandManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import tokyo.peya.plugins.gamemanager.impls.GameManagerAPIImpl;
 
 public final class GameManager extends JavaPlugin
 {
     // Effectively final.
     private static GameManagerAPI INSTANCE;
 
+    @SuppressWarnings({"unused", "FieldCanBeLocal"})
+    private CommandManager mainCommand;  // We need to keep this reference to prevent the plugin from being unloaded.
+
     @Override
     public void onEnable()
     {
-        setGameManager(new GameManagerAPIImpl());
+        setGameManager(new GameManagerAPI());
+
+        this.mainCommand = new CommandManager(this, "game", "GameManager", "game");
 
         this.getLogger().info("GameManagerAPI is enabled.");
     }
