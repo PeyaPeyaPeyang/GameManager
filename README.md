@@ -1,3 +1,3 @@
-# GameManager
+# GameManagerAPI
 
 ゲームマネージャー(仮)

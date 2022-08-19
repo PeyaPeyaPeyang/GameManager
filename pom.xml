@@ -7,7 +7,11 @@
     <groupId>tokyo.peya.plugins</groupId>
     <artifactId>GameManager</artifactId>
     <version>1.0.0</version>
-    <packaging>jar</packaging>
+    <modules>
+        <module>plugin</module>
+        <module>GameManagerAPI</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <name>GameManager</name>
 
@@ -41,6 +45,13 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <artifactSet>
+                                <excludes>
+                                    <exclude>org.slf4j:*</exclude>
+                                    <exclude>org.apache.commons:*</exclude>
+                                    <exclude>org.yaml:*</exclude><!-- Used by PeyangSuperLibrary, but we doesn't that feature. -->
+                                </excludes>
+                            </artifactSet>
                         </configuration>
                     </execution>
                 </executions>
@@ -77,21 +88,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.comphenix.protocol</groupId>
-            <artifactId>ProtocolLib</artifactId>
-            <version>4.5.1</version>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>23.0.0</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>tokyo.peya.lib</groupId>
-            <artifactId>PeyangSuperLibrary</artifactId>
-            <version>114.191.981.0</version>
         </dependency>
     </dependencies>
 </project>
