@@ -1,0 +1,8 @@
+name: GameManager
+version: '${project.version}'
+main: tokyo.peya.plugins.gamemanager.GameManager
+prefix: GM
+softdepend: [PeyangPaperUtils]
+authors: [Peyang]
+description: An awesome game managing system
+website: https://peya.tokyo/
