@@ -18,6 +18,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>tokyo.peya.plugins</groupId>
@@ -41,6 +48,13 @@
             <groupId>tokyo.peya.lib</groupId>
             <artifactId>PeyangSuperLibrary</artifactId>
             <version>114.191.981.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.TeamKUN</groupId>
+            <artifactId>PeyangPaperUtils</artifactId>
+            <version>1.0.9</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
