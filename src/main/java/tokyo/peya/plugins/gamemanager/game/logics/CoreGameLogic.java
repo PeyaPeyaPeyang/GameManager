@@ -1,6 +1,9 @@
 package tokyo.peya.plugins.gamemanager.game.logics;
 
+import net.kunmc.lab.peyangpaperutils.lib.terminal.Terminals;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import tokyo.peya.plugins.gamemanager.Game;
 import tokyo.peya.plugins.gamemanager.GameManagerAPI;
 import tokyo.peya.plugins.gamemanager.game.GameLogicBase;
@@ -51,5 +54,17 @@ public class CoreGameLogic extends GameLogicBase
     public void onEnd(GameEndRule timing)
     {
         this.addAllPlayersAsTiming(PlayerAutoGameJoinRule.GAME_ENDED);
+    }
+
+    @Override
+    public void onPlayerJoin(Player player)
+    {
+        Terminals.of(player).info(ChatColor.GREEN + "ゲーム「" + this.seed.getDisplayName() + "」に参加しました。");
+    }
+
+    @Override
+    public void onPlayerLeave(Player player)
+    {
+        Terminals.of(player).info(ChatColor.RED +  "ゲーム「" + this.seed.getDisplayName() + "」から退出しました。");
     }
 }
