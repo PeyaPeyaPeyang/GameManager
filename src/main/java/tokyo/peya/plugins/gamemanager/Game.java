@@ -57,7 +57,7 @@ public class Game
         this.seed = seed;
         this.gameID = UUID.randomUUID().toString().substring(0, 8);
 
-        this.gameLogics = seed.getLogics();
+        this.gameLogics = new ArrayList<>(seed.getLogics());
         this.gameLogics.add(0, new CoreGameLogic(this, gameManagerAPI, seed));
 
         this.players = new LinkedList<>();
