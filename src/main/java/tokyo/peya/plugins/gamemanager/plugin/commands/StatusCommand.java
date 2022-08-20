@@ -5,6 +5,7 @@ import net.kunmc.lab.peyangpaperutils.lib.terminal.Terminal;
 import net.kunmc.lab.peyangpaperutils.lib.utils.Pair;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -31,7 +32,8 @@ public class StatusCommand extends CommandBase
             GameManager.getGameManager().getGames().stream()
                     .map(game -> new Pair<>(game.getGameID(), game.getSeed().getDisplayName()))
                     .map(pair -> of(ChatColor.YELLOW + "* " + ChatColor.AQUA + pair.getLeft() + " - " + pair.getRight())
-                            .clickEvent(ClickEvent.runCommand("/gamemanager status " + pair.getLeft())))
+                            .clickEvent(ClickEvent.runCommand("/gm status " + pair.getLeft()))
+                            .hoverEvent(HoverEvent.showText(of(ChatColor.YELLOW + "クリックして詳細を表示！"))))
                     .forEach(terminal::write);
             return;
         }
@@ -74,7 +76,7 @@ public class StatusCommand extends CommandBase
 
     private static void printValue(Terminal terminal, int indent, String key, Object value)
     {
-        terminal.info(ChatColor.AQUA + "%s,%s：" + ChatColor.YELLOW + "%s",
+        terminal.info(ChatColor.AQUA + "%s%s：" + ChatColor.YELLOW + "%s",
                 StringUtils.repeat(" ", indent * 2), key, value);
     }
 
