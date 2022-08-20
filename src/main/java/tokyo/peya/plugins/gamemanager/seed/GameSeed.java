@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import tokyo.peya.plugins.gamemanager.game.GameLogic;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * ゲームの構成やルールを定義します。
@@ -57,7 +58,7 @@ public class GameSeed
      * プレイヤのゲームの自動参加の条件です。
      */
     @Singular("joinTiming")
-    List<PlayerAutoGameJoinRule> joinRules;
+    List<PlayerAutoGameJoinRule> autoJoinRules;
 
 
     /**
@@ -79,6 +80,11 @@ public class GameSeed
      */
     public boolean isJoinTiming(@NotNull PlayerAutoGameJoinRule timing)
     {
-        return this.joinRules.contains(timing);
+        return this.autoJoinRules.contains(timing);
+    }
+
+    public String getId()
+    {
+        return this.id.toUpperCase(Locale.ENGLISH);
     }
 }
