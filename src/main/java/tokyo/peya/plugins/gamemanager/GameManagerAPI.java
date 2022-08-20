@@ -9,10 +9,10 @@ import tokyo.peya.plugins.gamemanager.seed.GameRunRule;
 import tokyo.peya.plugins.gamemanager.seed.GameSeed;
 import tokyo.peya.plugins.gamemanager.seed.GameEndRule;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -23,7 +23,7 @@ public class GameManagerAPI
     @NotNull
     private final GameManager gameManager;
     @NotNull
-    private final Map<UUID, Game> games;
+    private final Map<String, Game> games;
 
     public GameManagerAPI(@NotNull GameManager gameManager)
     {
@@ -53,7 +53,7 @@ public class GameManagerAPI
      * @param gameId ゲームID
      * @return ゲーム
      */
-    public @Nullable Game getGame(@NotNull UUID gameId)
+    public @Nullable Game getGame(@NotNull String gameId)
     {
         return this.games.get(gameId);
     }
@@ -64,7 +64,7 @@ public class GameManagerAPI
      * @param gameId ゲームID
      * @throws IllegalArgumentException ゲームが存在しない場合
      */
-    public @NotNull Game getGameStrict(@NotNull UUID gameId)
+    public @NotNull Game getGameStrict(@NotNull String gameId)
     {
         Game game = this.games.get(gameId);
         if (game == null)
@@ -128,7 +128,7 @@ public class GameManagerAPI
      * @throws IllegalArgumentException ゲームが存在しない場合
      * @see Game#dispose()
      */
-    public void dispose(@NotNull UUID gameId)
+    public void dispose(@NotNull String gameId)
     {
         this.getGameStrict(gameId).dispose();
     }
@@ -148,5 +148,15 @@ public class GameManagerAPI
         return this.games.values().stream().parallel()
                 .filter(game -> game.isPlayer(player))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * ゲーム一覧を取得します。
+     * このメソッドから提供されるリスト化rあアイテムを削除しても、実際のゲームリストは変更されません。
+     * @return ゲーム一覧
+     */
+    public List<Game> getGames()
+    {
+        return new ArrayList<>(this.games.values());
     }
 }

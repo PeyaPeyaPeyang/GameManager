@@ -12,7 +12,6 @@ description: An awesome game managing system
 website: https://peya.tokyo/
 
 commands:
-  game:
-    description: ゲームの根幹に関わるコマンドです。
-    usage: /game <subCommand> [args]
-    aliases: gm
+  gm:
+    description: ゲームマネージャの根幹に関わるコマンドです。
+    usage: /gm <subCommand> [args]
