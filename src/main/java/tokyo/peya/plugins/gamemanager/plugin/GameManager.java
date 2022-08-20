@@ -31,7 +31,7 @@ public final class GameManager extends JavaPlugin
     {
         setGameManager(new GameManagerAPI(this));
 
-        this.mainCommand = new CommandManager(this, "game", "GameManager", "game");
+        this.mainCommand = new CommandManager(this, "gamemanager", "GameManager", "gm");
 
         this.getLogger().info("GameManager is enabled.");
     }

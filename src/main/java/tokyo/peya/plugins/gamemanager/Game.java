@@ -37,7 +37,7 @@ public class Game
     @NotNull
     private final GameSeed seed;
     @NotNull
-    private final UUID gameID;
+    private final String gameID;
 
     @NotNull
     @Getter(AccessLevel.NONE)
@@ -55,7 +55,7 @@ public class Game
         this.gameManager = gameManager;
         this.gameManagerAPI = gameManagerAPI;
         this.seed = seed;
-        this.gameID = UUID.randomUUID();
+        this.gameID = UUID.randomUUID().toString().substring(0, 8);
 
         this.gameLogics = seed.getLogics();
         this.gameLogics.add(0, new CoreGameLogic(this, gameManagerAPI, seed));
