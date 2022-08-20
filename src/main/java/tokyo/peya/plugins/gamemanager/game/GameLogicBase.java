@@ -8,6 +8,9 @@ import tokyo.peya.plugins.gamemanager.Game;
 import tokyo.peya.plugins.gamemanager.GameManagerAPI;
 import tokyo.peya.plugins.gamemanager.seed.GameStartRule;
 import tokyo.peya.plugins.gamemanager.seed.GameEndRule;
+import tokyo.peya.plugins.gamemanager.seed.PlayerAutoGameJoinRule;
+import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinRule;
+import tokyo.peya.plugins.gamemanager.seed.PlayerGameLeaveRule;
 
 /**
  * ゲームのロジックの定義の基底クラスです。
@@ -31,22 +34,22 @@ public abstract class GameLogicBase implements GameLogic, Listener
     }
 
     @Override
-    public void onStart(GameStartRule timing)
+    public void onStart(GameStartRule rule)
     {
     }
 
     @Override
-    public void onEnd(GameEndRule timing)
+    public void onEnd(GameEndRule rule)
     {
     }
 
     @Override
-    public void onPlayerJoin(Player player)
+    public void onPlayerJoin(Player player, PlayerAutoGameJoinRule rule)
     {
     }
 
     @Override
-    public void onPlayerLeave(Player player)
+    public void onPlayerLeave(Player player, PlayerGameLeaveRule rule)
     {
     }
 }

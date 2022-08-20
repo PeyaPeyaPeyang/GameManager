@@ -4,6 +4,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import tokyo.peya.plugins.gamemanager.seed.GameStartRule;
 import tokyo.peya.plugins.gamemanager.seed.GameEndRule;
+import tokyo.peya.plugins.gamemanager.seed.PlayerAutoGameJoinRule;
+import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinRule;
+import tokyo.peya.plugins.gamemanager.seed.PlayerGameLeaveRule;
 
 /**
  * ゲームのロジック(動作)を定義します。
@@ -18,24 +21,25 @@ public interface GameLogic extends Listener
     /**
      * スタート時に実行する処理です。
      *
-     * @param timing タイミング
+     * @param rule 一致した開始条件
      */
-    void onStart(GameStartRule timing);
+    void onStart(GameStartRule rule);
 
     /**
      * ストップ時に実行する処理です。
      *
-     * @param timing タイミング
+     * @param rule 一致した停止条件
      */
-    void onEnd(GameEndRule timing);
+    void onEnd(GameEndRule rule);
 
     /**
      * プレイヤがゲーム参加したときに実行する処理です。
      * サーバに参加したときに呼び出されるものではありません。
      *
      * @param player プレイヤ
+     * @param rule 一致した参加条件
      */
-    void onPlayerJoin(Player player);
+    void onPlayerJoin(Player player, PlayerAutoGameJoinRule rule);
 
     /**
      * プレイヤが離脱したときに実行する処理です。
@@ -43,5 +47,5 @@ public interface GameLogic extends Listener
      *
      * @param player プレイヤ
      */
-    void onPlayerLeave(Player player);
+    void onPlayerLeave(Player player, PlayerGameLeaveRule rule);
 }

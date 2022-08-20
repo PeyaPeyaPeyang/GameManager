@@ -11,6 +11,7 @@ import tokyo.peya.plugins.gamemanager.seed.GameSeed;
 import tokyo.peya.plugins.gamemanager.seed.GameStartRule;
 import tokyo.peya.plugins.gamemanager.seed.GameEndRule;
 import tokyo.peya.plugins.gamemanager.seed.PlayerAutoGameJoinRule;
+import tokyo.peya.plugins.gamemanager.seed.PlayerGameLeaveRule;
 
 /**
  * ゲームの根幹にかかわるビルト・インのロジックです。
@@ -45,25 +46,25 @@ public class CoreGameLogic extends GameLogicBase
     }
 
     @Override
-    public void onStart(GameStartRule timing)
+    public void onStart(GameStartRule rule)
     {
         this.addAllPlayersAsTiming(PlayerAutoGameJoinRule.GAME_STARTED);
     }
 
     @Override
-    public void onEnd(GameEndRule timing)
+    public void onEnd(GameEndRule rule)
     {
         this.addAllPlayersAsTiming(PlayerAutoGameJoinRule.GAME_ENDED);
     }
 
     @Override
-    public void onPlayerJoin(Player player)
+    public void onPlayerJoin(Player player, PlayerAutoGameJoinRule rule)
     {
         Terminals.of(player).info(ChatColor.GREEN + "ゲーム「" + this.seed.getDisplayName() + "」に参加しました。");
     }
 
     @Override
-    public void onPlayerLeave(Player player)
+    public void onPlayerLeave(Player player, PlayerGameLeaveRule rule)
     {
         Terminals.of(player).info(ChatColor.RED +  "ゲーム「" + this.seed.getDisplayName() + "」から退出しました。");
     }

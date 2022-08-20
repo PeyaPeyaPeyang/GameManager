@@ -17,6 +17,7 @@ import tokyo.peya.plugins.gamemanager.seed.GameStartRule;
 import tokyo.peya.plugins.gamemanager.seed.GameEndRule;
 import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinRule;
 import tokyo.peya.plugins.gamemanager.seed.PlayerAutoGameJoinRule;
+import tokyo.peya.plugins.gamemanager.seed.PlayerGameLeaveRule;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -236,6 +237,24 @@ public class Game
             return;
 
         this.players.add(new GamePlayer(this, player));
+
+        this.dispatchOnPlayerJoined(player, joinRule);
+    }
+
+    /**
+     * ゲームからプレイヤを削除します。
+     * @param player プレイヤ
+     * @param leaveRule 一致したルール
+     * @throws IllegalArgumentException プレイヤがゲームに存在しない場合
+     */
+    public void removePlayer(@NotNull Player player, @NotNull PlayerGameLeaveRule leaveRule)
+    {
+        if (!this.isPlayer(player))
+            throw new IllegalArgumentException("The player isn't in the game: " + player.getName());
+
+        this.players.removeIf(gamePlayer -> gamePlayer.getPlayer().equals(player));
+
+        this.dispatchOnPlayerLeft(player, leaveRule);
     }
 
 
@@ -280,6 +299,32 @@ public class Game
         {
             e.printStackTrace();
             this.gameManager.getLogger().severe("Failed to pass create game handlers: " + this.gameID);
+        }
+    }
+
+    private void dispatchOnPlayerJoined(@NotNull Player player, @NotNull PlayerAutoGameJoinRule joinRule)
+    {
+        try
+        {
+            this.gameLogics.forEach(gameLogic -> gameLogic.onPlayerJoin(player, joinRule));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            this.gameManager.getLogger().severe("Failed to pass player join game handlers: " + this.gameID);
+        }
+    }
+
+    private void dispatchOnPlayerLeft(@NotNull Player player, @NotNull PlayerGameLeaveRule leaveRule)
+    {
+        try
+        {
+            this.gameLogics.forEach(gameLogic -> gameLogic.onPlayerLeave(player, leaveRule));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            this.gameManager.getLogger().severe("Failed to pass player quit game handlers: " + this.gameID);
         }
     }
 }
