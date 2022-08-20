@@ -16,10 +16,10 @@ import java.util.List;
 public class GameSeed
 {
     /**
-     * ゲームの名前です。
+     * ゲームの表示名です。
      * Eg: "SkyWars"
      */
-    String name;
+    String displayName;
 
     /**
      * ゲームを識別する一意の名前。大小は自動で大文字に変換されます。
