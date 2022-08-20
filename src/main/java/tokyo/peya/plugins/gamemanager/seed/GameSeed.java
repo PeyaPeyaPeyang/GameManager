@@ -57,7 +57,7 @@ public class GameSeed
     /**
      * プレイヤのゲームの自動参加の条件です。
      */
-    @Singular("joinTiming")
+    @Singular("autoJoinRule")
     List<PlayerAutoGameJoinRule> autoJoinRules;
 
 
