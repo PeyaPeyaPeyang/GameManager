@@ -33,7 +33,7 @@ public class CreateDummyGameCommand extends CommandBase
 
         terminal.info("New game created! id: %s", game.getGameID());
 
-        Bukkit.dispatchCommand(sender, "/gm status " + game.getGameID());
+        Bukkit.dispatchCommand(sender, "gm status " + game.getGameID());
     }
 
     @Override
