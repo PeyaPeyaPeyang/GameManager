@@ -74,6 +74,11 @@ public class GameSeed
     List<GameLogic> logics;
 
     /**
+     * プレイヤが参加したときにメッセージをブロードキャストするかどうかです。
+     */
+    boolean notificationOnPlayerJoinLeave;
+
+    /**
      * プレイヤの参加タイミングとして設定されているかどうかを判定します。
      * @param timing 判定するタイミング
      * @return 設定されている場合はtrue

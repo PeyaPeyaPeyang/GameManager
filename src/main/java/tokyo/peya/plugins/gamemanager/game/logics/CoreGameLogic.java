@@ -64,12 +64,26 @@ public class CoreGameLogic extends GameLogicBase
     public void onPlayerJoin(Player player, PlayerAutoGameJoinRule rule)
     {
         Terminals.of(player).info(ChatColor.GREEN + "ゲーム「" + this.seed.getDisplayName() + "」に参加しました。");
+
+        String playerJoinMessage = ChatColor.GREEN + "+ " + ChatColor.YELLOW + player.getName() + " がゲームに参加しました。";
+
+        if (this.seed.isNotificationOnPlayerJoinLeave())
+            this.getGame().getPlayers().stream().parallel()
+                    .filter(gamePlayer -> !gamePlayer.getPlayer().getUniqueId().equals(player.getUniqueId()))
+                    .forEach(p -> p.getPlayer().sendMessage(playerJoinMessage));
     }
 
     @Override
     public void onPlayerLeave(Player player, PlayerGameLeaveRule rule)
     {
         Terminals.of(player).info(ChatColor.RED +  "ゲーム「" + this.seed.getDisplayName() + "」から退出しました。");
+
+        String playerLeaveMessage = ChatColor.RED + "- " + ChatColor.YELLOW + player.getName() + " がゲームから退出しました。";
+
+        if (this.seed.isNotificationOnPlayerJoinLeave())
+            this.getGame().getPlayers().stream().parallel()
+                    .filter(gamePlayer -> !gamePlayer.getPlayer().getUniqueId().equals(player.getUniqueId()))
+                    .forEach(p -> p.getPlayer().sendMessage(playerLeaveMessage));
     }
 
     @EventHandler
