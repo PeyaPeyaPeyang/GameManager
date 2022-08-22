@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tokyo.peya.plugins.gamemanager.Game;
-import tokyo.peya.plugins.gamemanager.plugin.GameManager;
+import tokyo.peya.plugins.gamemanager.GameManager;
 import tokyo.peya.plugins.gamemanager.seed.PlayerAutoGameJoinRule;
 import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinRule;
 

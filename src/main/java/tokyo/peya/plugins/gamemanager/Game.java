@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 import tokyo.peya.plugins.gamemanager.game.GameLogic;
 import tokyo.peya.plugins.gamemanager.game.GamePlayer;
 import tokyo.peya.plugins.gamemanager.game.logics.CoreGameLogic;
-import tokyo.peya.plugins.gamemanager.plugin.GameManager;
 import tokyo.peya.plugins.gamemanager.seed.GameRunRule;
 import tokyo.peya.plugins.gamemanager.seed.GameSeed;
 import tokyo.peya.plugins.gamemanager.seed.GameStartRule;

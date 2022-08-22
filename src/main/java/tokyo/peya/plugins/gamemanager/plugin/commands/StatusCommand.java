@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tokyo.peya.plugins.gamemanager.Game;
 import tokyo.peya.plugins.gamemanager.game.GamePlayer;
-import tokyo.peya.plugins.gamemanager.plugin.GameManager;
+import tokyo.peya.plugins.gamemanager.GameManager;
 import tokyo.peya.plugins.gamemanager.seed.GameSeed;
 import tokyo.peya.plugins.gamemanager.seed.PlayerAutoGameJoinRule;
 

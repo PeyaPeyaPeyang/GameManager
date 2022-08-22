@@ -4,7 +4,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tokyo.peya.plugins.gamemanager.plugin.GameManager;
 import tokyo.peya.plugins.gamemanager.seed.GameRunRule;
 import tokyo.peya.plugins.gamemanager.seed.GameSeed;
 import tokyo.peya.plugins.gamemanager.seed.GameEndRule;

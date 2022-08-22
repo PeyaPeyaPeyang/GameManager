@@ -1,6 +1,6 @@
 name: GameManager
 version: '${project.version}'
-main: tokyo.peya.plugins.gamemanager.plugin.GameManager
+main: tokyo.peya.plugins.gamemanager.GameManager
 
 prefix: GM
 
@@ -15,3 +15,6 @@ commands:
   gm:
     description: ゲームマネージャの根幹に関わるコマンドです。
     usage: /gm <subCommand> [args]
+  game:
+    description: ゲームに関するコマンドです。
+    usage: /game <subCommand> [args]
