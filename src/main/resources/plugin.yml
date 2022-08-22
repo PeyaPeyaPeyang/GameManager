@@ -18,3 +18,19 @@ commands:
   game:
     description: ゲームに関するコマンドです。
     usage: /game <subCommand> [args]
+
+permissions:
+  gm:
+    default: op
+    description: ゲームマネージャの権限です。
+    children:
+        gm.status:
+          description: ゲームの状態を確認する権限です。
+  game:
+    default: true
+    description: 一般用のゲーム権限です。
+    children:
+      gm.join:
+        description: ゲームに参加する権限です。
+      gm.leave:
+        description: ゲームから退出する権限です。
