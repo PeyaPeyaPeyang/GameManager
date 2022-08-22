@@ -249,7 +249,7 @@ public class Game
      */
     public void removePlayer(@NotNull Player player, @NotNull PlayerGameLeaveRule leaveRule)
     {
-        if (!this.isPlayer(player))
+        if (!this.isPlayer(player) && leaveRule == PlayerGameLeaveRule.MANUAL)
             throw new IllegalArgumentException("The player isn't in the game: " + player.getName());
 
         this.players.removeIf(gamePlayer -> gamePlayer.getPlayer().equals(player));

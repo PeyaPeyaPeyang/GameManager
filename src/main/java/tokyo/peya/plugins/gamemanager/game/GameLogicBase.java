@@ -9,7 +9,6 @@ import tokyo.peya.plugins.gamemanager.GameManagerAPI;
 import tokyo.peya.plugins.gamemanager.seed.GameStartRule;
 import tokyo.peya.plugins.gamemanager.seed.GameEndRule;
 import tokyo.peya.plugins.gamemanager.seed.PlayerAutoGameJoinRule;
-import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinRule;
 import tokyo.peya.plugins.gamemanager.seed.PlayerGameLeaveRule;
 
 /**

@@ -4,6 +4,9 @@ import net.kunmc.lab.peyangpaperutils.lib.terminal.Terminals;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import tokyo.peya.plugins.gamemanager.Game;
 import tokyo.peya.plugins.gamemanager.GameManagerAPI;
 import tokyo.peya.plugins.gamemanager.game.GameLogicBase;
@@ -67,5 +70,18 @@ public class CoreGameLogic extends GameLogicBase
     public void onPlayerLeave(Player player, PlayerGameLeaveRule rule)
     {
         Terminals.of(player).info(ChatColor.RED +  "ゲーム「" + this.seed.getDisplayName() + "」から退出しました。");
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event)
+    {
+        if (this.getGame().getSeed().getAutoJoinRules().contains(PlayerAutoGameJoinRule.SERVER_JOINED))
+            this.getGame().addPlayer(event.getPlayer(), PlayerAutoGameJoinRule.SERVER_JOINED);
+    }
+
+    @EventHandler
+    public void onPlayerLeave(PlayerQuitEvent event)
+    {
+        this.getGame().removePlayer(event.getPlayer(), PlayerGameLeaveRule.SERVER_LEFT);
     }
 }

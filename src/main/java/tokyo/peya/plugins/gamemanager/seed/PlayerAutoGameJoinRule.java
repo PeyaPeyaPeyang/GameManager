@@ -20,5 +20,9 @@ public enum PlayerAutoGameJoinRule
     /**
      * ゲーム終了時に自動的に参加します。
      */
-    GAME_ENDED
+    GAME_ENDED,
+    /**
+     * サーバへ参加したときに自動的に参加します。
+     */
+    SERVER_JOINED,
 }

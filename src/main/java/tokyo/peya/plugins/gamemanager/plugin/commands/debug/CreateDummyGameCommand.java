@@ -26,6 +26,7 @@ public class CreateDummyGameCommand extends CommandBase
                 .autoJoinRule(PlayerAutoGameJoinRule.GAME_CREATED)
                 .autoJoinRule(PlayerAutoGameJoinRule.GAME_STARTED)
                 .autoJoinRule(PlayerAutoGameJoinRule.GAME_ENDED)
+                .autoJoinRule(PlayerAutoGameJoinRule.SERVER_JOINED)
                 .joinRule(PlayerGameJoinRule.ALL)
                 .build();
 
