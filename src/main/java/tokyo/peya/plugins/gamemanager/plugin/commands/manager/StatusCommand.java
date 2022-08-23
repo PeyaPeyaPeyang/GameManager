@@ -16,7 +16,7 @@ import tokyo.peya.plugins.gamemanager.Game;
 import tokyo.peya.plugins.gamemanager.game.GamePlayer;
 import tokyo.peya.plugins.gamemanager.GameManager;
 import tokyo.peya.plugins.gamemanager.seed.GameSeed;
-import tokyo.peya.plugins.gamemanager.seed.PlayerAutoGameJoinRule;
+import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinCause;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,7 +73,7 @@ public class StatusCommand extends CommandBase
         printValue(terminal, 0, "ゲーム設定", "");
         printValue(terminal, 1, "プレイヤ参加ルール", seed.getJoinRule());
         printValue(terminal, 1, "プレイヤ自動参加ルール", seed.getAutoJoinRules().stream()
-                .map(PlayerAutoGameJoinRule::toString)
+                .map(PlayerGameJoinCause::toString)
                 .collect(Collectors.joining(", ")));
         printValue(terminal, 1, "ゲーム自動開始ルール", seed.getAutoStartRule());
         printValue(terminal, 1, "ゲーム自動終了ルール", seed.getAutoEndRule());

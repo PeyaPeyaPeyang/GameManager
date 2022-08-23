@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tokyo.peya.plugins.gamemanager.Game;
 import tokyo.peya.plugins.gamemanager.GameManager;
-import tokyo.peya.plugins.gamemanager.seed.PlayerGameLeaveRule;
+import tokyo.peya.plugins.gamemanager.seed.PlayerGameLeaveCause;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,7 +42,7 @@ public class LeaveCommand extends CommandBase
         }
         try
         {
-            game.removePlayer(player, PlayerGameLeaveRule.MANUAL);
+            game.removePlayer(player, PlayerGameLeaveCause.MANUAL);
         }
         catch (Exception e)
         {

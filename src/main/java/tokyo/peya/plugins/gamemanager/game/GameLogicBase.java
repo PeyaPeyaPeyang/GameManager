@@ -4,16 +4,12 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.jetbrains.annotations.NotNull;
 import tokyo.peya.plugins.gamemanager.Game;
 import tokyo.peya.plugins.gamemanager.GameManagerAPI;
-import tokyo.peya.plugins.gamemanager.seed.GameStartRule;
-import tokyo.peya.plugins.gamemanager.seed.GameEndRule;
-import tokyo.peya.plugins.gamemanager.seed.PlayerAutoGameJoinRule;
-import tokyo.peya.plugins.gamemanager.seed.PlayerGameLeaveRule;
-
-import java.util.Objects;
-import java.util.UUID;
+import tokyo.peya.plugins.gamemanager.seed.GameStartCause;
+import tokyo.peya.plugins.gamemanager.seed.GameEndCause;
+import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinCause;
+import tokyo.peya.plugins.gamemanager.seed.PlayerGameLeaveCause;
 
 /**
  * ゲームのロジックの定義の基底クラスです。
@@ -37,22 +33,22 @@ public abstract class GameLogicBase implements GameLogic, Listener
     }
 
     @Override
-    public void onStart(GameStartRule rule)
+    public void onStart(GameStartCause rule)
     {
     }
 
     @Override
-    public void onEnd(GameEndRule rule)
+    public void onEnd(GameEndCause rule)
     {
     }
 
     @Override
-    public void onPlayerJoin(Player player, PlayerAutoGameJoinRule rule)
+    public void onPlayerJoin(Player player, PlayerGameJoinCause rule)
     {
     }
 
     @Override
-    public void onPlayerLeave(Player player, PlayerGameLeaveRule rule)
+    public void onPlayerLeave(Player player, PlayerGameLeaveCause rule)
     {
     }
 

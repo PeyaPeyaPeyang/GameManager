@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import tokyo.peya.plugins.gamemanager.Game;
 import tokyo.peya.plugins.gamemanager.GameManager;
 import tokyo.peya.plugins.gamemanager.seed.GameSeed;
-import tokyo.peya.plugins.gamemanager.seed.PlayerAutoGameJoinRule;
+import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinCause;
 import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinRule;
 
 import java.util.List;
@@ -30,10 +30,10 @@ public class CreateDummyGameCommand extends CommandBase
                         "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\n" +
                         "Excepteur sint occaecat cupidatat non proident,\n" +
                         "sunt in culpa qui officia deserunt mollit anim id est laborum.")
-                .autoJoinRule(PlayerAutoGameJoinRule.GAME_CREATED)
-                .autoJoinRule(PlayerAutoGameJoinRule.GAME_STARTED)
-                .autoJoinRule(PlayerAutoGameJoinRule.GAME_ENDED)
-                .autoJoinRule(PlayerAutoGameJoinRule.SERVER_JOINED)
+                .autoJoinRule(PlayerGameJoinCause.GAME_CREATED)
+                .autoJoinRule(PlayerGameJoinCause.GAME_STARTED)
+                .autoJoinRule(PlayerGameJoinCause.GAME_ENDED)
+                .autoJoinRule(PlayerGameJoinCause.SERVER_JOINED)
                 .joinRule(PlayerGameJoinRule.ALL)
                 .countdownSeconds(10)
                 .build();

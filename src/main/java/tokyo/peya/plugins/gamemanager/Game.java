@@ -12,13 +12,13 @@ import tokyo.peya.plugins.gamemanager.game.GameLogic;
 import tokyo.peya.plugins.gamemanager.game.GamePlayer;
 import tokyo.peya.plugins.gamemanager.game.logics.CoreGameLogic;
 import tokyo.peya.plugins.gamemanager.game.logics.CountdownDisplayLogic;
-import tokyo.peya.plugins.gamemanager.seed.GameEndRule;
-import tokyo.peya.plugins.gamemanager.seed.GameRunRule;
+import tokyo.peya.plugins.gamemanager.seed.GameEndCause;
+import tokyo.peya.plugins.gamemanager.seed.GameRunCause;
 import tokyo.peya.plugins.gamemanager.seed.GameSeed;
-import tokyo.peya.plugins.gamemanager.seed.GameStartRule;
-import tokyo.peya.plugins.gamemanager.seed.PlayerAutoGameJoinRule;
+import tokyo.peya.plugins.gamemanager.seed.GameStartCause;
+import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinCause;
 import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinRule;
-import tokyo.peya.plugins.gamemanager.seed.PlayerGameLeaveRule;
+import tokyo.peya.plugins.gamemanager.seed.PlayerGameLeaveCause;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -95,7 +95,7 @@ public class Game
     }
 
     /**
-     * ゲームを削除します。動作中の場合は {@link GameEndRule#MANUAL} で停止されます。
+     * ゲームを削除します。動作中の場合は {@link GameEndCause#MANUAL} で停止されます。
      */
     public void dispose()
     {
@@ -141,7 +141,7 @@ public class Game
             else
                 throw new IllegalStateException("Game is already running.");
 
-        if (this.seed.getRunRule() == GameRunRule.ONLY_ONE_GAME)
+        if (this.seed.getRunRule() == GameRunCause.ONLY_ONE_GAME)
         {
             Game anotherOnlyOne = this.gameManagerAPI.getRunningOnlyOneGame();
             if (anotherOnlyOne != null)
@@ -165,13 +165,13 @@ public class Game
      *
      * @param rule 一致したルール
      * @throws IllegalStateException ゲームがすでに開始されている場合
-     * @throws IllegalStateException {@link GameRunRule#ONLY_ONE_GAME} が指定されていて、かつ他のゲームがすでに開始されている場合
+     * @throws IllegalStateException {@link GameRunCause#ONLY_ONE_GAME} が指定されていて、かつ他のゲームがすでに開始されている場合
      */
-    public void start(GameStartRule rule)
+    public void start(GameStartCause rule)
     {
-        this.checkGameStartable(rule == GameStartRule.MANUAL);
+        this.checkGameStartable(rule == GameStartCause.MANUAL);
 
-        if (!(this.countdownProvider == null || rule == GameStartRule.COUNTDOWN))
+        if (!(this.countdownProvider == null || rule == GameStartCause.COUNTDOWN))
         {
             this.countdownProvider.scheduleGameStart();
             return;
@@ -229,15 +229,15 @@ public class Game
 
     /**
      * ゲームを開始します。
-     * 内部で {@link #start(GameStartRule)} を呼び出します。タイミングには {@link GameStartRule#MANUAL} が指定されます。
+     * 内部で {@link #start(GameStartCause)} を呼び出します。タイミングには {@link GameStartCause#MANUAL} が指定されます。
      *
      * @throws IllegalStateException ゲームがすでに開始されている場合
-     * @throws IllegalStateException {@link GameRunRule#ONLY_ONE_GAME} が指定されていて、かつ他のゲームがすでに開始されている場合
-     * @see #start(GameStartRule)
+     * @throws IllegalStateException {@link GameRunCause#ONLY_ONE_GAME} が指定されていて、かつ他のゲームがすでに開始されている場合
+     * @see #start(GameStartCause)
      */
     public void start()
     {
-        this.start(GameStartRule.MANUAL);
+        this.start(GameStartCause.MANUAL);
     }
 
     /**
@@ -245,7 +245,7 @@ public class Game
      *
      * @param rule 合致した終了ルール
      */
-    public void stop(GameEndRule rule)
+    public void stop(GameEndCause rule)
     {
         if (!this.running)
             throw new IllegalStateException("The game aren't started: " + this.gameID);
@@ -256,13 +256,13 @@ public class Game
 
     /**
      * ゲームを終了します。
-     * 内部で {@link #stop(GameEndRule)} を呼び出します。タイミングには {@link GameEndRule#MANUAL} が指定されます。
+     * 内部で {@link #stop(GameEndCause)} を呼び出します。タイミングには {@link GameEndCause#MANUAL} が指定されます。
      *
-     * @see #stop(GameEndRule)
+     * @see #stop(GameEndCause)
      */
     public void stop()
     {
-        this.stop(GameEndRule.MANUAL);
+        this.stop(GameEndCause.MANUAL);
     }
 
     private boolean isPlayerCanJoin(@NotNull Player player, boolean auto)
@@ -310,9 +310,9 @@ public class Game
      * @param player プレイヤ
      * @param joinRule 一致したルール
      */
-    public void addPlayer(@NotNull Player player, @NotNull PlayerAutoGameJoinRule joinRule)
+    public void addPlayer(@NotNull Player player, @NotNull PlayerGameJoinCause joinRule)
     {
-        if (!this.isPlayerCanJoin(player, joinRule != PlayerAutoGameJoinRule.MANUAL))
+        if (!this.isPlayerCanJoin(player, joinRule != PlayerGameJoinCause.MANUAL))
             return;
 
         this.players.add(new GamePlayer(this, player));
@@ -326,9 +326,9 @@ public class Game
      * @param leaveRule 一致したルール
      * @throws IllegalArgumentException プレイヤがゲームに存在しない場合
      */
-    public void removePlayer(@NotNull Player player, @NotNull PlayerGameLeaveRule leaveRule)
+    public void removePlayer(@NotNull Player player, @NotNull PlayerGameLeaveCause leaveRule)
     {
-        if (!this.isPlayer(player) && leaveRule == PlayerGameLeaveRule.MANUAL)
+        if (!this.isPlayer(player) && leaveRule == PlayerGameLeaveCause.MANUAL)
             throw new IllegalArgumentException("The player isn't in the game: " + player.getName());
 
         this.players.removeIf(gamePlayer -> gamePlayer.getPlayer().equals(player));
@@ -340,7 +340,7 @@ public class Game
 
     // =============================== Game logic event dispatch ===============================
 
-    private void dispatchOnStarted(GameStartRule rule)
+    private void dispatchOnStarted(GameStartCause rule)
     {
         try
         {
@@ -355,7 +355,7 @@ public class Game
         }
     }
 
-    private void dispatchOnStopped(GameEndRule rule)
+    private void dispatchOnStopped(GameEndCause rule)
     {
         try
         {
@@ -381,7 +381,7 @@ public class Game
         }
     }
 
-    private void dispatchOnPlayerJoined(@NotNull Player player, @NotNull PlayerAutoGameJoinRule joinRule)
+    private void dispatchOnPlayerJoined(@NotNull Player player, @NotNull PlayerGameJoinCause joinRule)
     {
         try
         {
@@ -394,7 +394,7 @@ public class Game
         }
     }
 
-    private void dispatchOnPlayerLeft(@NotNull Player player, @NotNull PlayerGameLeaveRule leaveRule)
+    private void dispatchOnPlayerLeft(@NotNull Player player, @NotNull PlayerGameLeaveCause leaveRule)
     {
         try
         {

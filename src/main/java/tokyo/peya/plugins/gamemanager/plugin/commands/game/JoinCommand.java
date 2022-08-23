@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tokyo.peya.plugins.gamemanager.Game;
 import tokyo.peya.plugins.gamemanager.GameManager;
-import tokyo.peya.plugins.gamemanager.seed.PlayerAutoGameJoinRule;
+import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinCause;
 import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinRule;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public class JoinCommand extends CommandBase
 
         try
         {
-            game.addPlayer(player, PlayerAutoGameJoinRule.MANUAL);
+            game.addPlayer(player, PlayerGameJoinCause.MANUAL);
         }
         catch (Exception e)
         {

@@ -3,7 +3,7 @@ package tokyo.peya.plugins.gamemanager.seed;
 /**
  * プレイヤのゲームの参加のタイミングを制御します。
  */
-public enum PlayerAutoGameJoinRule
+public enum PlayerGameJoinCause
 {
     /**
      * コマンドや他のプラグインによって参加されます。

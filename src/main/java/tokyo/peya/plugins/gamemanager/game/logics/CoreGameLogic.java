@@ -14,10 +14,10 @@ import tokyo.peya.plugins.gamemanager.GameManagerAPI;
 import tokyo.peya.plugins.gamemanager.game.GameLogicBase;
 import tokyo.peya.plugins.gamemanager.game.GamePlayer;
 import tokyo.peya.plugins.gamemanager.seed.GameSeed;
-import tokyo.peya.plugins.gamemanager.seed.GameStartRule;
-import tokyo.peya.plugins.gamemanager.seed.GameEndRule;
-import tokyo.peya.plugins.gamemanager.seed.PlayerAutoGameJoinRule;
-import tokyo.peya.plugins.gamemanager.seed.PlayerGameLeaveRule;
+import tokyo.peya.plugins.gamemanager.seed.GameStartCause;
+import tokyo.peya.plugins.gamemanager.seed.GameEndCause;
+import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinCause;
+import tokyo.peya.plugins.gamemanager.seed.PlayerGameLeaveCause;
 import tokyo.peya.plugins.gamemanager.utils.Utils;
 
 /**
@@ -34,13 +34,13 @@ public class CoreGameLogic extends GameLogicBase
         this.seed = seed;
     }
 
-    private void addAllPlayers(PlayerAutoGameJoinRule timing)
+    private void addAllPlayers(PlayerGameJoinCause timing)
     {
         Bukkit.getOnlinePlayers().forEach(player ->
                 CoreGameLogic.this.getGame().addPlayer(player, timing));
     }
 
-    private void addAllPlayersAsTiming(PlayerAutoGameJoinRule timing)
+    private void addAllPlayersAsTiming(PlayerGameJoinCause timing)
     {
         if (this.seed.isJoinTiming(timing))
             this.addAllPlayers(timing);
@@ -49,13 +49,13 @@ public class CoreGameLogic extends GameLogicBase
     @Override
     public void onCreate()
     {
-        this.addAllPlayersAsTiming(PlayerAutoGameJoinRule.GAME_CREATED);
+        this.addAllPlayersAsTiming(PlayerGameJoinCause.GAME_CREATED);
     }
 
     @Override
-    public void onStart(GameStartRule rule)
+    public void onStart(GameStartCause rule)
     {
-        this.addAllPlayersAsTiming(PlayerAutoGameJoinRule.GAME_STARTED);
+        this.addAllPlayersAsTiming(PlayerGameJoinCause.GAME_STARTED);
 
         this.getGame().getPlayers().stream().parallel()
                 .map(GamePlayer::getPlayer)
@@ -92,9 +92,9 @@ public class CoreGameLogic extends GameLogicBase
     }
 
     @Override
-    public void onEnd(GameEndRule rule)
+    public void onEnd(GameEndCause rule)
     {
-        this.addAllPlayersAsTiming(PlayerAutoGameJoinRule.GAME_ENDED);
+        this.addAllPlayersAsTiming(PlayerGameJoinCause.GAME_ENDED);
 
         this.getGame().getPlayers().stream().parallel()
                 .map(GamePlayer::getPlayer)
@@ -108,7 +108,7 @@ public class CoreGameLogic extends GameLogicBase
     }
 
     @Override
-    public void onPlayerJoin(Player player, PlayerAutoGameJoinRule rule)
+    public void onPlayerJoin(Player player, PlayerGameJoinCause rule)
     {
         Terminals.of(player).info(ChatColor.GREEN + "ゲーム「" + this.seed.getDisplayName() + "」に参加しました。");
 
@@ -121,7 +121,7 @@ public class CoreGameLogic extends GameLogicBase
     }
 
     @Override
-    public void onPlayerLeave(Player player, PlayerGameLeaveRule rule)
+    public void onPlayerLeave(Player player, PlayerGameLeaveCause rule)
     {
         Terminals.of(player).info(ChatColor.RED +  "ゲーム「" + this.seed.getDisplayName() + "」から退出しました。");
 
@@ -136,13 +136,13 @@ public class CoreGameLogic extends GameLogicBase
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event)
     {
-        if (this.getGame().getSeed().getAutoJoinRules().contains(PlayerAutoGameJoinRule.SERVER_JOINED))
-            this.getGame().addPlayer(event.getPlayer(), PlayerAutoGameJoinRule.SERVER_JOINED);
+        if (this.getGame().getSeed().getAutoJoinRules().contains(PlayerGameJoinCause.SERVER_JOINED))
+            this.getGame().addPlayer(event.getPlayer(), PlayerGameJoinCause.SERVER_JOINED);
     }
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event)
     {
-        this.getGame().removePlayer(event.getPlayer(), PlayerGameLeaveRule.SERVER_LEFT);
+        this.getGame().removePlayer(event.getPlayer(), PlayerGameLeaveCause.SERVER_LEFT);
     }
 }

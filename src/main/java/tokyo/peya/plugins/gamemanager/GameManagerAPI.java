@@ -4,11 +4,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tokyo.peya.plugins.gamemanager.game.GameLogic;
-import tokyo.peya.plugins.gamemanager.game.GameLogicBase;
-import tokyo.peya.plugins.gamemanager.seed.GameRunRule;
+import tokyo.peya.plugins.gamemanager.seed.GameRunCause;
 import tokyo.peya.plugins.gamemanager.seed.GameSeed;
-import tokyo.peya.plugins.gamemanager.seed.GameEndRule;
+import tokyo.peya.plugins.gamemanager.seed.GameEndCause;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,21 +94,21 @@ public class GameManagerAPI
     }
 
     /**
-     * {@link GameRunRule} が {@link GameRunRule#ONLY_ONE_GAME} に指定されているゲームが作動中かどうかを判定します。
+     * {@link GameRunCause} が {@link GameRunCause#ONLY_ONE_GAME} に指定されているゲームが作動中かどうかを判定します。
      *
      * @return 動作中のゲームが存在する場合は true、そうでない場合は false
-     * @see GameRunRule#ONLY_ONE_GAME
+     * @see GameRunCause#ONLY_ONE_GAME
      */
     public @Nullable Game getRunningOnlyOneGame()
     {
         return this.games.values().stream().parallel()
                 .filter(Game::isRunning)
-                .filter(game -> game.getSeed().getRunRule() == GameRunRule.ONLY_ONE_GAME)
+                .filter(game -> game.getSeed().getRunRule() == GameRunCause.ONLY_ONE_GAME)
                 .findFirst().orElse(null);
     }
 
     /**
-     * ゲームを削除します。動作中の場合は {@link GameEndRule#MANUAL} で停止されます。
+     * ゲームを削除します。動作中の場合は {@link GameEndCause#MANUAL} で停止されます。
      * このメソッドは内部で {@link Game#dispose()} を呼び出します。
      *
      * @param game ゲーム
@@ -122,7 +120,7 @@ public class GameManagerAPI
     }
 
     /**
-     * ゲームを削除します。動作中の場合は {@link GameEndRule#MANUAL} で停止されす。
+     * ゲームを削除します。動作中の場合は {@link GameEndCause#MANUAL} で停止されす。
      * このメソッドは内部で {@link Game#dispose()} を呼び出します。
      *
      * @param gameId ゲームID

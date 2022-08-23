@@ -1,6 +1,6 @@
 package tokyo.peya.plugins.gamemanager.seed;
 
-public enum PlayerGameLeaveRule
+public enum PlayerGameLeaveCause
 {
     /**
      * コマンドや他のプラグインによって退出されます。

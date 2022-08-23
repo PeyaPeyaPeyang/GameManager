@@ -3,7 +3,7 @@ package tokyo.peya.plugins.gamemanager;
 import lombok.AccessLevel;
 import lombok.Getter;
 import org.bukkit.scheduler.BukkitRunnable;
-import tokyo.peya.plugins.gamemanager.seed.GameStartRule;
+import tokyo.peya.plugins.gamemanager.seed.GameStartCause;
 
 @Getter
 class CountdownProvider
@@ -84,7 +84,7 @@ class CountdownProvider
             {
                 this.provider.countdownRunning = false;
                 this.cancel();
-                this.provider.game.start(GameStartRule.COUNTDOWN);
+                this.provider.game.start(GameStartCause.COUNTDOWN);
                 return;
             }
 

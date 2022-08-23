@@ -42,19 +42,19 @@ public class GameSeed
      * ゲームを自動開始する条件です。
      */
     @Builder.Default
-    GameStartRule autoStartRule = GameStartRule.MANUAL;
+    GameStartCause autoStartRule = GameStartCause.MANUAL;
 
     /**
      * ゲームを自動停止する条件です。
      */
     @Builder.Default
-    GameEndRule autoEndRule = GameEndRule.MANUAL;
+    GameEndCause autoEndRule = GameEndCause.MANUAL;
 
     /**
      * ゲームを実行するルールです。
      */
     @Builder.Default
-    GameRunRule runRule = GameRunRule.ONLY_ONE_GAME;
+    GameRunCause runRule = GameRunCause.ONLY_ONE_GAME;
 
     /**
      * プレイヤの複数ゲームへの参加を許可するかどうかを制御します。
@@ -66,7 +66,7 @@ public class GameSeed
      * プレイヤのゲームの自動参加の条件です。
      */
     @Singular("autoJoinRule")
-    List<PlayerAutoGameJoinRule> autoJoinRules;
+    List<PlayerGameJoinCause> autoJoinRules;
 
 
     /**
@@ -98,7 +98,7 @@ public class GameSeed
      * @param timing 判定するタイミング
      * @return 設定されている場合はtrue
      */
-    public boolean isJoinTiming(@NotNull PlayerAutoGameJoinRule timing)
+    public boolean isJoinTiming(@NotNull PlayerGameJoinCause timing)
     {
         return this.autoJoinRules.contains(timing);
     }

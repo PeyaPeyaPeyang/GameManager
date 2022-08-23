@@ -3,7 +3,7 @@ package tokyo.peya.plugins.gamemanager.seed;
 /**
  * ゲームのサーバでの実行時の扱いについて制御します。
  */
-public enum GameRunRule
+public enum GameRunCause
 {
     /**
      * サーバ上で実行できるゲームをこれ1つに限定します。
