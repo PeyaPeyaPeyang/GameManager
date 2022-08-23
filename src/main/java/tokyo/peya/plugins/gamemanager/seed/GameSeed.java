@@ -79,6 +79,13 @@ public class GameSeed
     boolean notificationOnPlayerJoinLeave;
 
     /**
+     * ゲーム前のカウントダウンの長さです。
+     * 0以下の場合はカウントダウンなしで開始します。
+     */
+    @Builder.Default
+    int countdownSeconds = 10;
+
+    /**
      * プレイヤの参加タイミングとして設定されているかどうかを判定します。
      * @param timing 判定するタイミング
      * @return 設定されている場合はtrue

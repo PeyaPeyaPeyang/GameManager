@@ -28,6 +28,7 @@ public class CreateDummyGameCommand extends CommandBase
                 .autoJoinRule(PlayerAutoGameJoinRule.GAME_ENDED)
                 .autoJoinRule(PlayerAutoGameJoinRule.SERVER_JOINED)
                 .joinRule(PlayerGameJoinRule.ALL)
+                .countdownSeconds(10)
                 .build();
 
         Game game = GameManager.getGameManager().createGame(GameManager.getProvidingPlugin(this.getClass()), seed);

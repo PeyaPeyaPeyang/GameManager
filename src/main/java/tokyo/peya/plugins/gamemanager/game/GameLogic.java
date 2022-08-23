@@ -2,17 +2,25 @@ package tokyo.peya.plugins.gamemanager.game;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.jetbrains.annotations.NotNull;
 import tokyo.peya.plugins.gamemanager.seed.GameStartRule;
 import tokyo.peya.plugins.gamemanager.seed.GameEndRule;
 import tokyo.peya.plugins.gamemanager.seed.PlayerAutoGameJoinRule;
-import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinRule;
 import tokyo.peya.plugins.gamemanager.seed.PlayerGameLeaveRule;
+
+import java.util.UUID;
 
 /**
  * ゲームのロジック(動作)を定義します。
  */
 public interface GameLogic extends Listener
 {
+    /**
+     * ロジックを識別する一意のIDを取得します。
+     */
+    @NotNull
+    UUID getLogicId();
+
     /**
      * ゲームが作成されたときに実行する処理です。
      */
@@ -48,4 +56,11 @@ public interface GameLogic extends Listener
      * @param player プレイヤ
      */
     void onPlayerLeave(Player player, PlayerGameLeaveRule rule);
+
+    /**
+     * ゲームの開始のカウントダウンが進んでいるときに実行する処理です。
+     *
+     * @param remainSeconds 残り秒数
+     */
+    void onStartCountdown(int remainSeconds);
 }

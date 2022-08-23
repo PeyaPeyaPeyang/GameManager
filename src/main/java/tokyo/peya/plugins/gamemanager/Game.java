@@ -7,9 +7,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tokyo.peya.plugins.gamemanager.game.GameLogic;
 import tokyo.peya.plugins.gamemanager.game.GamePlayer;
 import tokyo.peya.plugins.gamemanager.game.logics.CoreGameLogic;
+import tokyo.peya.plugins.gamemanager.game.logics.CountdownDisplayLogic;
 import tokyo.peya.plugins.gamemanager.seed.GameRunRule;
 import tokyo.peya.plugins.gamemanager.seed.GameSeed;
 import tokyo.peya.plugins.gamemanager.seed.GameStartRule;
@@ -39,6 +41,10 @@ public class Game
     @NotNull
     private final String gameID;
 
+    @Getter(AccessLevel.NONE)
+    @Nullable
+    private final CountdownProvider countdownProvider;
+
     @NotNull
     @Getter(AccessLevel.NONE)
     private final List<GameLogic> gameLogics;
@@ -59,6 +65,15 @@ public class Game
 
         this.gameLogics = new ArrayList<>(seed.getLogics());
         this.gameLogics.add(0, new CoreGameLogic(this, gameManagerAPI, seed));
+
+        if (seed.getCountdownSeconds() > 0)
+        {
+            this.countdownProvider = new CountdownProvider(this, seed.getCountdownSeconds());
+            this.gameLogics.add(new CountdownDisplayLogic(this, gameManagerAPI, seed.getCountdownSeconds()));
+        }
+        else
+            this.countdownProvider = null;
+
 
         this.players = new LinkedList<>();
 
@@ -118,17 +133,31 @@ public class Game
         return Objects.hash(this.seed.getId(), this.gameID);
     }
 
-    private void checkGameStartable()
+    private boolean checkGameStartable(boolean isAuto)
     {
         if (this.running)
-            throw new IllegalStateException("Game has already started: " + this.gameID);
+            if (isAuto)
+                return false;
+            else
+                throw new IllegalStateException("Game is already running.");
 
         if (this.seed.getRunRule() == GameRunRule.ONLY_ONE_GAME)
         {
             Game anotherOnlyOne = this.gameManagerAPI.getRunningOnlyOneGame();
             if (anotherOnlyOne != null)
-                throw new IllegalStateException("Another game is running: " + anotherOnlyOne.getGameID());
+                if (isAuto)
+                    return false;
+                else
+                    throw new IllegalStateException("Another game is already running: " + anotherOnlyOne.getGameID());
         }
+
+        if (this.countdownProvider != null && this.countdownProvider.isCountdownRunning())
+            if (isAuto)
+                return false;
+            else
+                throw new IllegalStateException("Countdown is already running. Retry after canceling the countdown.");
+
+        return true;
     }
 
     /**
@@ -140,11 +169,43 @@ public class Game
      */
     public void start(GameStartRule rule)
     {
-        this.checkGameStartable();
+        this.checkGameStartable(rule == GameStartRule.MANUAL);
+
+        if (this.countdownProvider != null)
+        {
+            this.countdownProvider.scheduleGameStart();
+            return;
+        }
 
         this.running = true;
 
         this.dispatchOnStarted(rule);
+    }
+
+    /**
+     * ゲームの開始がスケジュールされている場合に, そのスケジュールをキャンセルします。
+     *
+     * @throws IllegalStateException ゲームの開始がスケジュールされていない場合
+     */
+    public void cancelGameStart()
+    {
+        if (this.countdownProvider == null) // Other check is in CountdownProvider#cancelGameStart()
+            throw new IllegalStateException("Game start is not scheduled.");
+
+        this.countdownProvider.cancelGameStart();
+    }
+
+    /**
+     * ゲームの開始がスケジュールされている場合に, そのスケジュールをキャンセルし, 即座にゲームを開始します。
+     *
+     * @throws IllegalStateException ゲームの開始がスケジュールされていない場合
+     */
+    public void skipScheduleAndStartGame()
+    {
+        if (this.countdownProvider == null) // Other check is in CountdownProvider#skipCountdown()
+            throw new IllegalStateException("Game start is not scheduled.");
+
+        this.countdownProvider.skipCountdown();
     }
 
     /**
@@ -325,5 +386,27 @@ public class Game
             e.printStackTrace();
             this.gameManager.getLogger().severe("Failed to pass player quit game handlers: " + this.gameID);
         }
+    }
+
+    void dispatchOnStartCountdown(int time)
+    {
+        try
+        {
+            this.gameLogics.forEach(gameLogic -> gameLogic.onStartCountdown(time));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            this.gameManager.getLogger().severe("Failed to pass start countdown game handlers: " + this.gameID);
+        }
+    }
+
+    /**
+     * ロジックを削除します。
+     * @param gameLogic ロジック
+     */
+    public void removeLogic(@NotNull GameLogic gameLogic)
+    {
+        this.gameLogics.remove(gameLogic);
     }
 }
