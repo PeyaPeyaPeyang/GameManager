@@ -79,7 +79,6 @@ class CountdownProvider
 
             int countdownTimeRemaining = this.provider.countdownTimeRemaining;
 
-            this.provider.game.dispatchOnStartCountdown(countdownTimeRemaining);
 
             if (countdownTimeRemaining <= 0)
             {
@@ -88,6 +87,8 @@ class CountdownProvider
                 this.provider.game.start(GameStartRule.COUNTDOWN);
                 return;
             }
+
+            this.provider.game.dispatchOnStartCountdown(countdownTimeRemaining);
 
             this.provider.countdownTimeRemaining--;
         }
