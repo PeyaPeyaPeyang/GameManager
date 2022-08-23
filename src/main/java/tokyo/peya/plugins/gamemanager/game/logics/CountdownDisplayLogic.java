@@ -27,8 +27,6 @@ public class CountdownDisplayLogic extends GameLogicBase
                 .map(GamePlayer::getPlayer)
                 .forEach(player -> this.notifyCountdown(player, remainSeconds));
 
-        if (remainSeconds == 1)
-            this.destructSelf();
     }
 
     private void notifyCountdown(Player player, int remainSeconds)
@@ -39,8 +37,8 @@ public class CountdownDisplayLogic extends GameLogicBase
 
         if (notifyChat)
             player.sendMessage(ChatColor.YELLOW + "ゲーム開始まであと " +
-                            Utils.getPercentageColor(remainSeconds, this.countdownTime) +
-                    ChatColor.YELLOW + "秒");
+                            Utils.getPercentageColor(remainSeconds, this.countdownTime) + remainSeconds +
+                    ChatColor.YELLOW + " 秒");
 
         if (notifyTitle)
             player.sendTitle(

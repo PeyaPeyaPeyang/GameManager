@@ -16,12 +16,6 @@ import java.util.UUID;
 public interface GameLogic extends Listener
 {
     /**
-     * ロジックを識別する一意のIDを取得します。
-     */
-    @NotNull
-    UUID getLogicId();
-
-    /**
      * ゲームが作成されたときに実行する処理です。
      */
     void onCreate();

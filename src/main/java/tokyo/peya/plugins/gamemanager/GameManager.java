@@ -4,6 +4,7 @@ import net.kunmc.lab.peyangpaperutils.lib.command.CommandManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import tokyo.peya.plugins.gamemanager.plugin.commands.manager.DebugCommand;
+import tokyo.peya.plugins.gamemanager.plugin.commands.manager.StartCommand;
 import tokyo.peya.plugins.gamemanager.plugin.commands.manager.StatusCommand;
 import tokyo.peya.plugins.gamemanager.plugin.commands.game.JoinCommand;
 import tokyo.peya.plugins.gamemanager.plugin.commands.game.LeaveCommand;
@@ -39,6 +40,7 @@ public final class GameManager extends JavaPlugin
         CommandManager mainCommand = new CommandManager(this, "gm", "GameManager", "gm");
         mainCommand.registerCommand("status", new StatusCommand());
         mainCommand.registerCommand("debug", new DebugCommand());
+        mainCommand.registerCommand("start", new StartCommand());
 
         CommandManager gameCommand = new CommandManager(this, "game", "GameManager", "game");
         gameCommand.registerCommand("join", new JoinCommand());

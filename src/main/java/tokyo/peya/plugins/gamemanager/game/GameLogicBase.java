@@ -24,16 +24,10 @@ public abstract class GameLogicBase implements GameLogic, Listener
     private final Game game;
     private final GameManagerAPI gameManager;
 
-    @NotNull
-    @Getter(AccessLevel.PUBLIC)
-    private final UUID logicId;
-
     public GameLogicBase(Game game, GameManagerAPI gameManager)
     {
         this.game = game;
         this.gameManager = gameManager;
-
-        this.logicId = UUID.randomUUID();
     }
 
     @Override
@@ -66,25 +60,5 @@ public abstract class GameLogicBase implements GameLogic, Listener
     public void onStartCountdown(int remainSeconds)
     {
 
-    }
-
-    protected void destructSelf()
-    {
-        this.game.removeLogic(this);
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o) return true;
-        if (!(o instanceof GameLogicBase)) return false;
-        GameLogicBase that = (GameLogicBase) o;
-        return this.logicId.equals(that.logicId);
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return Objects.hash(this.logicId);
     }
 }

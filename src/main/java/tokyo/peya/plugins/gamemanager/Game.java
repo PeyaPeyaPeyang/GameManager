@@ -12,12 +12,12 @@ import tokyo.peya.plugins.gamemanager.game.GameLogic;
 import tokyo.peya.plugins.gamemanager.game.GamePlayer;
 import tokyo.peya.plugins.gamemanager.game.logics.CoreGameLogic;
 import tokyo.peya.plugins.gamemanager.game.logics.CountdownDisplayLogic;
+import tokyo.peya.plugins.gamemanager.seed.GameEndRule;
 import tokyo.peya.plugins.gamemanager.seed.GameRunRule;
 import tokyo.peya.plugins.gamemanager.seed.GameSeed;
 import tokyo.peya.plugins.gamemanager.seed.GameStartRule;
-import tokyo.peya.plugins.gamemanager.seed.GameEndRule;
-import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinRule;
 import tokyo.peya.plugins.gamemanager.seed.PlayerAutoGameJoinRule;
+import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinRule;
 import tokyo.peya.plugins.gamemanager.seed.PlayerGameLeaveRule;
 
 import java.util.ArrayList;
@@ -171,7 +171,7 @@ public class Game
     {
         this.checkGameStartable(rule == GameStartRule.MANUAL);
 
-        if (this.countdownProvider != null)
+        if (!(this.countdownProvider == null || rule == GameStartRule.COUNTDOWN))
         {
             this.countdownProvider.scheduleGameStart();
             return;
@@ -206,6 +206,25 @@ public class Game
             throw new IllegalStateException("Game start is not scheduled.");
 
         this.countdownProvider.skipCountdown();
+    }
+
+    /**
+     * ゲームの開始がスケジュールされているかどうかを返します。
+     * @return ゲームの開始がスケジュールされている場合は true, そうでない場合は false
+     */
+    public boolean isStartScheduled()
+    {
+        return this.countdownProvider != null && this.countdownProvider.isCountdownRunning();
+    }
+
+    /**
+     * ゲームの開始がスケジュールされている場合に, ゲームが開始するまでの時間を返します。
+     *
+     * @return ゲームが開始するまでの時間
+     */
+    public int getRemainingSeconds()
+    {
+        return this.countdownProvider != null ? this.countdownProvider.getCountdownTimeRemaining() : 0;
     }
 
     /**
@@ -293,7 +312,7 @@ public class Game
      */
     public void addPlayer(@NotNull Player player, @NotNull PlayerAutoGameJoinRule joinRule)
     {
-        if (!this.isPlayerCanJoin(player, joinRule == PlayerAutoGameJoinRule.MANUAL))
+        if (!this.isPlayerCanJoin(player, joinRule != PlayerAutoGameJoinRule.MANUAL))
             return;
 
         this.players.add(new GamePlayer(this, player));
