@@ -3,6 +3,7 @@ package tokyo.peya.plugins.gamemanager.utils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.map.MinecraftFont;
 
 /**
  * ユーティリティをまとめたクラスです。
@@ -54,7 +55,7 @@ public class Utils
 
     private static int calcCentralizeSpaces(String text)
     {
-        return (int) Math.round((MAX_CHAT_TEXT - 1.4 * ChatColor.stripColor(text).length()) / 2.0);
+        return (int) Math.round((MAX_CHAT_TEXT - MinecraftFont.Font.getWidth(text)) * 1.5);
     }
 
 }
