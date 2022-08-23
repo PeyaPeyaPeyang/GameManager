@@ -85,7 +85,7 @@ public class CoreGameLogic extends GameLogicBase
         String[] lines = description.split("\n");
 
         for (String line : lines)
-            player.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + line);
+            Utils.sendMessageCenter(player, ChatColor.YELLOW + ChatColor.BOLD.toString() + line);
 
         player.sendMessage("");
         player.sendMessage(header);
