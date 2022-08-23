@@ -20,6 +20,13 @@ public class StartCommand extends CommandBase
         if (indicateArgsLengthInvalid(terminal, args, 1))
             return;
 
+        Game runningGame;
+        if ((runningGame = GameManager.getGameManager().getRunningOnlyOneGame()) != null)
+        {
+            terminal.error("他のゲームが実行中です：" + runningGame.getGameID());
+            return;
+        }
+
         Game game;
         if ((game = GameManager.getGameManager().getGame(args[0])) == null)
         {
