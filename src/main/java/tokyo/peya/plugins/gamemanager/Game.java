@@ -19,6 +19,7 @@ import tokyo.peya.plugins.gamemanager.seed.GameStartCause;
 import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinCause;
 import tokyo.peya.plugins.gamemanager.seed.PlayerGameJoinRule;
 import tokyo.peya.plugins.gamemanager.seed.PlayerGameLeaveCause;
+import tokyo.peya.plugins.gamemanager.utils.Storage;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -40,6 +41,8 @@ public class Game
     private final GameSeed seed;
     @NotNull
     private final String gameID;
+    @NotNull
+    private final Storage gameData;
 
     @Getter(AccessLevel.NONE)
     @Nullable
@@ -62,6 +65,7 @@ public class Game
         this.gameManagerAPI = gameManagerAPI;
         this.seed = seed;
         this.gameID = UUID.randomUUID().toString().substring(0, 8);
+        this.gameData = new Storage();
 
         this.gameLogics = new ArrayList<>(seed.getLogics());
         this.gameLogics.add(0, new CoreGameLogic(this, gameManagerAPI, seed));
@@ -73,7 +77,6 @@ public class Game
         }
         else
             this.countdownProvider = null;
-
 
         this.players = new LinkedList<>();
 

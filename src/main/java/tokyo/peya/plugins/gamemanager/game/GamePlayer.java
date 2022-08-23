@@ -4,23 +4,28 @@ import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import tokyo.peya.plugins.gamemanager.Game;
+import tokyo.peya.plugins.gamemanager.utils.Storage;
 
 import java.util.Objects;
 
+@Getter
 public class GamePlayer
 {
-    @Getter
     @NotNull
     private final Game game;
 
-    @Getter
     @NotNull
     private final Player player;
+
+    @NotNull
+    private final Storage playerStorage;
 
     public GamePlayer(@NotNull Game game, @NotNull Player player)
     {
         this.game = game;
         this.player = player;
+
+        this.playerStorage = new Storage();
     }
 
     @Override
