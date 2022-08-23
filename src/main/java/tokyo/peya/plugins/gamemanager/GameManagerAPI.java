@@ -89,7 +89,7 @@ public class GameManagerAPI
     public List<Game> getRunningGames()
     {
         return this.games.values().stream().parallel()
-                .filter(Game::isStarted)
+                .filter(Game::isRunning)
                 .collect(Collectors.toList());
     }
 
@@ -102,7 +102,7 @@ public class GameManagerAPI
     public @Nullable Game getRunningOnlyOneGame()
     {
         return this.games.values().stream().parallel()
-                .filter(Game::isStarted)
+                .filter(Game::isRunning)
                 .filter(game -> game.getSeed().getRunRule() == GameRunRule.ONLY_ONE_GAME)
                 .findFirst().orElse(null);
     }

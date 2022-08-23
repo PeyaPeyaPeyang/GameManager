@@ -46,7 +46,7 @@ public class Game
     @Getter(AccessLevel.NONE)
     private final List<GamePlayer> players;
 
-    private boolean started;
+    private boolean running;
 
     public Game(@NotNull Plugin plugin, @NotNull GameManager gameManager, @NotNull GameManagerAPI gameManagerAPI, @NotNull GameSeed seed)
     {
@@ -62,7 +62,7 @@ public class Game
 
         this.players = new LinkedList<>();
 
-        this.started = false;
+        this.running = false;
 
         this.initialize();
     }
@@ -84,7 +84,7 @@ public class Game
      */
     public void dispose()
     {
-        if (this.started)
+        if (this.running)
             this.stop();
 
         this.gameLogics.forEach(HandlerList::unregisterAll);  // no need to create onLogicRemoved method
@@ -120,7 +120,7 @@ public class Game
 
     private void checkGameStartable()
     {
-        if (this.started)
+        if (this.running)
             throw new IllegalStateException("Game has already started: " + this.gameID);
 
         if (this.seed.getRunRule() == GameRunRule.ONLY_ONE_GAME)
@@ -142,7 +142,7 @@ public class Game
     {
         this.checkGameStartable();
 
-        this.started = true;
+        this.running = true;
 
         this.dispatchOnStarted(rule);
     }
@@ -167,11 +167,11 @@ public class Game
      */
     public void stop(GameEndRule rule)
     {
-        if (!this.started)
+        if (!this.running)
             throw new IllegalStateException("The game aren't started: " + this.gameID);
 
         this.dispatchOnStopped(rule);
-        this.started = false;
+        this.running = false;
     }
 
     /**

@@ -55,6 +55,11 @@ public class StatusCommand extends CommandBase
         GameSeed seed = game.getSeed();
 
         printValue(terminal, 0, "ゲームID", game.getGameID());
+        printValue(terminal, 0, "ゲーム中",
+                game.isRunning() ?
+                        ChatColor.GREEN + "はい":
+                        ChatColor.RED + "いいえ");
+
         printValue(terminal, 0,  "ゲーム名", seed.getDisplayName());
         printValue(terminal, 0, "プレイヤー", "(" + game.getPlayers().size() + ") \n"
                 + game.getPlayers().stream()
