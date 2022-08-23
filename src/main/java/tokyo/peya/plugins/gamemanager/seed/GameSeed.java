@@ -23,6 +23,14 @@ public class GameSeed
     String displayName;
 
     /**
+     * ゲームの説明です。
+     * 開始時に表示されます。
+     */
+    @NotNull
+    @Builder.Default
+    String description = "";
+
+    /**
      * ゲームを識別する一意の名前。大小は自動で大文字に変換されます。
      * Eg: "SKYWARS"
      *

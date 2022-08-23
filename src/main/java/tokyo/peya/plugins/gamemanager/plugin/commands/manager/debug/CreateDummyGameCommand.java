@@ -23,6 +23,13 @@ public class CreateDummyGameCommand extends CommandBase
         GameSeed seed = GameSeed.builder()
                 .id("dummy_")
                 .displayName("Dummy Game")
+                .description("This is a dummy game. \n" +
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit,\n" +
+                        "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n" +
+                        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n" +
+                        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\n" +
+                        "Excepteur sint occaecat cupidatat non proident,\n" +
+                        "sunt in culpa qui officia deserunt mollit anim id est laborum.")
                 .autoJoinRule(PlayerAutoGameJoinRule.GAME_CREATED)
                 .autoJoinRule(PlayerAutoGameJoinRule.GAME_STARTED)
                 .autoJoinRule(PlayerAutoGameJoinRule.GAME_ENDED)

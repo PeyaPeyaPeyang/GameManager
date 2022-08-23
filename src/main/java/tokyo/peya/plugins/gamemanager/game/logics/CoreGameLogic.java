@@ -1,6 +1,7 @@
 package tokyo.peya.plugins.gamemanager.game.logics;
 
 import net.kunmc.lab.peyangpaperutils.lib.terminal.Terminals;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -17,6 +18,7 @@ import tokyo.peya.plugins.gamemanager.seed.GameStartRule;
 import tokyo.peya.plugins.gamemanager.seed.GameEndRule;
 import tokyo.peya.plugins.gamemanager.seed.PlayerAutoGameJoinRule;
 import tokyo.peya.plugins.gamemanager.seed.PlayerGameLeaveRule;
+import tokyo.peya.plugins.gamemanager.utils.Utils;
 
 /**
  * ゲームの根幹にかかわるビルト・インのロジックです。
@@ -69,6 +71,24 @@ public class CoreGameLogic extends GameLogicBase
                 ChatColor.YELLOW + ChatColor.BOLD.toString() + this.getGame().getSeed().getDisplayName(),
                 ChatColor.GREEN + "ゲームが開始されました。",
                 20, 40, 20);
+
+        // Game description
+
+        String header = ChatColor.GREEN + StringUtils.repeat("-", 53);
+
+        player.sendMessage(header);
+
+        Utils.sendMessageCenter(player, ChatColor.BOLD + this.getGame().getSeed().getDisplayName());
+        player.sendMessage("");
+
+        String description = this.getGame().getSeed().getDescription();
+        String[] lines = description.split("\n");
+
+        for (String line : lines)
+            player.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + line);
+
+        player.sendMessage("");
+        player.sendMessage(header);
     }
 
     @Override

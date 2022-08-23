@@ -1,6 +1,8 @@
 package tokyo.peya.plugins.gamemanager.utils;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 /**
  * ユーティリティをまとめたクラスです。
@@ -37,4 +39,22 @@ public class Utils
     {
         return getPercentageColor(value / (double) max);
     }
+
+    private static final int MAX_CHAT_TEXT = 80;
+
+    /**
+     * メッセージを中央に表示します。
+     * @param player プレイヤー
+     * @param message メッセージ
+     */
+    public static void sendMessageCenter(Player player, String message)
+    {
+        player.sendMessage(StringUtils.repeat(" ", calcCentralizeSpaces(message)) + message);
+    }
+
+    private static int calcCentralizeSpaces(String text)
+    {
+        return (int) Math.round((MAX_CHAT_TEXT - 1.4 * ChatColor.stripColor(text).length()) / 2.0);
+    }
+
 }
