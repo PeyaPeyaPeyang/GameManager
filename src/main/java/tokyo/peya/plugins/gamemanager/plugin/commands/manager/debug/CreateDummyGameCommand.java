@@ -1,4 +1,4 @@
-package tokyo.peya.plugins.gamemanager.plugin.commands.debug;
+package tokyo.peya.plugins.gamemanager.plugin.commands.manager.debug;
 
 import net.kunmc.lab.peyangpaperutils.lib.command.CommandBase;
 import net.kunmc.lab.peyangpaperutils.lib.terminal.Terminal;

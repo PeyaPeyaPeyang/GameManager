@@ -1,4 +1,4 @@
-package tokyo.peya.plugins.gamemanager.plugin.commands;
+package tokyo.peya.plugins.gamemanager.plugin.commands.manager;
 
 import net.kunmc.lab.peyangpaperutils.lib.command.CommandBase;
 import net.kunmc.lab.peyangpaperutils.lib.command.SubCommandWith;
@@ -6,7 +6,7 @@ import net.kyori.adventure.text.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tokyo.peya.plugins.gamemanager.plugin.commands.debug.CreateDummyGameCommand;
+import tokyo.peya.plugins.gamemanager.plugin.commands.manager.debug.CreateDummyGameCommand;
 
 import java.util.HashMap;
 import java.util.Map;
