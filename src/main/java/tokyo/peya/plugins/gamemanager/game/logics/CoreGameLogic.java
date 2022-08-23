@@ -3,6 +3,7 @@ package tokyo.peya.plugins.gamemanager.game.logics;
 import net.kunmc.lab.peyangpaperutils.lib.terminal.Terminals;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -10,6 +11,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import tokyo.peya.plugins.gamemanager.Game;
 import tokyo.peya.plugins.gamemanager.GameManagerAPI;
 import tokyo.peya.plugins.gamemanager.game.GameLogicBase;
+import tokyo.peya.plugins.gamemanager.game.GamePlayer;
 import tokyo.peya.plugins.gamemanager.seed.GameSeed;
 import tokyo.peya.plugins.gamemanager.seed.GameStartRule;
 import tokyo.peya.plugins.gamemanager.seed.GameEndRule;
@@ -52,12 +54,37 @@ public class CoreGameLogic extends GameLogicBase
     public void onStart(GameStartRule rule)
     {
         this.addAllPlayersAsTiming(PlayerAutoGameJoinRule.GAME_STARTED);
+
+        this.getGame().getPlayers().stream().parallel()
+                .map(GamePlayer::getPlayer)
+                .forEach(this::notifyGameStart);
+    }
+
+    private void notifyGameStart(Player player)
+    {
+        player.sendMessage(ChatColor.GREEN + "ゲームが開始されました。");
+        player.playSound(player.getLocation(), Sound.ENTITY_ENDER_DRAGON_AMBIENT, 1.0F, 1.0F);
+
+        player.sendTitle(
+                ChatColor.YELLOW + ChatColor.BOLD.toString() + this.getGame().getSeed().getDisplayName(),
+                ChatColor.GREEN + "ゲームが開始されました。",
+                20, 40, 20);
     }
 
     @Override
     public void onEnd(GameEndRule rule)
     {
         this.addAllPlayersAsTiming(PlayerAutoGameJoinRule.GAME_ENDED);
+
+        this.getGame().getPlayers().stream().parallel()
+                .map(GamePlayer::getPlayer)
+                .forEach(this::notifyGameEnd);
+    }
+
+    private void notifyGameEnd(Player player)
+    {
+        player.sendMessage(ChatColor.GREEN + "ゲームが終了しました。");
+        player.playSound(player.getLocation(), Sound.BLOCK_BELL_USE, 1.0F, 0.1F);
     }
 
     @Override
